@@ -20,6 +20,7 @@ namespace MatchMaker.Controllers
         MatchMakerEntities db = new MatchMakerEntities();
 
         //GET action for fieldofinterests
+        // api/form/fieldofinterest
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult FieldOfInterest()
@@ -32,10 +33,12 @@ namespace MatchMaker.Controllers
             interestList.Add("Management, Business, and Finance");
             interestList.Add("Architecture and Civil Engineering");
             interestList.Add("Science");
+
             return Ok(interestList);
         }
 
         //GET action for positions
+        // api/form/position
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Position()
@@ -58,6 +61,7 @@ namespace MatchMaker.Controllers
         }
 
         //GET action for technologies
+        // api/form/technologies
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Technologies()
@@ -76,8 +80,7 @@ namespace MatchMaker.Controllers
             return Ok(technologyList);
         }
 
-
-        // DELETE api/form/5
+        // DELETE api/form/delete/5
         [HttpDelete]
         public IHttpActionResult Delete(int? id)
         {
