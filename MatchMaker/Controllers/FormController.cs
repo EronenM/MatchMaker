@@ -15,6 +15,7 @@ namespace MatchMaker.Controllers
         public List<string> interestList = new List<string>();
         public List<string> positionList = new List<string>();
         public List<string> technologyList = new List<string>();
+        public List<People> peopleList = new List<People>();
 
         People pl = new People();
         MatchMakerEntities db = new MatchMakerEntities();
@@ -79,6 +80,24 @@ namespace MatchMaker.Controllers
 
             return Ok(technologyList);
         }
+
+        // Get action for all persons in people datatable
+        // api/form/Getall
+        [HttpGet]
+        [ResponseType(typeof(IEnumerator<People>))]
+        public IHttpActionResult GetAll()
+        {
+            var people = from p in db.People
+                         orderby p.person_id
+                         select p;
+
+            foreach (var person in people)
+            {
+                peopleList.Add(person);
+            }
+
+            return Ok(peopleList);
+        } 
 
         // DELETE api/form/delete/5
         [HttpDelete]
