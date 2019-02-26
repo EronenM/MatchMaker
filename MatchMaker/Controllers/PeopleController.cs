@@ -1,4 +1,5 @@
 ﻿using MatchMaker.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -12,12 +13,12 @@ namespace MatchMaker.Controllers
 {
     public class PeopleController : ApiController
     {
-        // [FromBody] tells ASP.NET Core to us the input formatter to bind the provided JSON to a People model
+        // [FromBody] Web API uses the Content-Type header to select a formatter
         // POST api/<controller>/create
         [HttpPost]
         public void Create([FromBody] int? id, string firstname, string lastname, string course, string description, bool usertype)
         {
-            MatchMakerEntities dbcontext = new MatchMakerEntities();
+            MatchMakerEntities dbContext = new MatchMakerEntities();
             People people = new People();
 
             people.firstname = firstname;
@@ -26,16 +27,46 @@ namespace MatchMaker.Controllers
             people.description = description;
             people.usertype = usertype;
 
-            dbcontext.People.Add(people);
+            if (people != null || !people.GetType().GetProperties().Any())
+            {
+                dbContext.People.Add(people);
+            }
 
             try
             {
-                dbcontext.SaveChanges();
+                dbContext.SaveChanges();
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 ex.Entries.Single().Reload();
-                dbcontext.SaveChanges();
+                dbContext.SaveChanges();
+            }
+        }
+        // Can accept JSON string, so in front-end parse (JSON.stringify) JS object to JSON string and send it.
+        // Works fine if we have text to be processed server side
+        // POST api/<controller>/createpeople
+        [HttpPost]
+        public void CreatePeople(People people/*, HttpRequestMessage request*/)
+        {
+            MatchMakerEntities dbContext = new MatchMakerEntities();
+            //var requestString = request.Content.ReadAsStringAsync().Result;
+            //var json = requestString;
+
+            //people = JsonConvert.DeserializeObject<People>(json);
+
+            if (people != null || !people.GetType().GetProperties().Any())
+            {
+                dbContext.People.Add(people);
+            }
+
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                ex.Entries.Single().Reload();
+                dbContext.SaveChanges();
             }
         }
     }
