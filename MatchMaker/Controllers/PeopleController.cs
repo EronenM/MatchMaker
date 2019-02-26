@@ -16,7 +16,7 @@ namespace MatchMaker.Controllers
         // [FromBody] Web API uses the Content-Type header to select a formatter
         // POST api/<controller>/create
         [HttpPost]
-        public void Create([FromBody] int? id, string firstname, string lastname, string course, string description, bool usertype)
+        public IHttpActionResult CreatePeople([FromBody] int? id, string firstname, string lastname, string course, string description, bool usertype)
         {
             MatchMakerEntities dbContext = new MatchMakerEntities();
             People people = new People();
@@ -41,12 +41,13 @@ namespace MatchMaker.Controllers
                 ex.Entries.Single().Reload();
                 dbContext.SaveChanges();
             }
+            return Ok();
         }
         // Can accept JSON string, so in front-end parse (JSON.stringify) JS object to JSON string and send it.
         // Works fine if we have text to be processed server side
         // POST api/<controller>/createpeople
         [HttpPost]
-        public void CreatePeople(People people/*, HttpRequestMessage request*/)
+        public IHttpActionResult Create(People people/*, HttpRequestMessage request*/)
         {
             MatchMakerEntities dbContext = new MatchMakerEntities();
             //var requestString = request.Content.ReadAsStringAsync().Result;
@@ -59,6 +60,11 @@ namespace MatchMaker.Controllers
                 dbContext.People.Add(people);
             }
 
+            else
+            {
+                return NotFound();
+            }
+
             try
             {
                 dbContext.SaveChanges();
@@ -68,6 +74,37 @@ namespace MatchMaker.Controllers
                 ex.Entries.Single().Reload();
                 dbContext.SaveChanges();
             }
+            return Ok();
+        }
+        // PUT: api/<controller>/update/id
+        [HttpPut]
+        public IHttpActionResult Update(int id, [FromBody] People people)
+        {
+            MatchMakerEntities dbContext = new MatchMakerEntities();
+
+            if (people != null || !people.GetType().GetProperties().Any())
+            {
+                var entityMatch = dbContext.People.FirstOrDefault(p => p.person_id == id);
+
+                entityMatch.firstname = people.firstname;
+                entityMatch.lastname = people.lastname;
+
+                try
+                {
+                    dbContext.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    ex.Entries.Single().Reload();
+                    dbContext.SaveChanges();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
