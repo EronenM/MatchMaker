@@ -19,6 +19,11 @@ namespace MatchMaker
                 routeTemplate: "api/People/{action}",
                 defaults: new { controller = "People" }
             );
+            config.Routes.MapHttpRoute(
+                name: "Update",
+                routeTemplate: "api/People/{action}/{id}",
+                defaults: new { controller = "People" }
+            ); 
         }
     }
 }
