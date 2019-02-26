@@ -20,8 +20,7 @@ namespace MatchMaker.Controllers
         //lisätty
         // GET: api/Tuote
 
-        //People pl = new People();
-        //MatchMakerEntities db = new MatchMakerEntities();
+
         //GET api/values
         //public List<People> Get()
         //{
@@ -48,9 +47,8 @@ namespace MatchMaker.Controllers
         {
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
+
     }
 }
+
+

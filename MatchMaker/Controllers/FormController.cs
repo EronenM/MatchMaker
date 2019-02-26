@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MatchMaker.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -68,5 +69,18 @@ namespace MatchMaker.Controllers
 
             return Ok(technologyList);
         }
+
+        People pl = new People();
+        MatchMakerEntities db = new MatchMakerEntities();
+
+        // DELETE api/form/5
+        [HttpDelete]
+        public void Delete(int? id)
+        {
+            People pl = db.People.Find(id);
+            db.People.Remove(pl);
+            db.SaveChanges();
+        }
+
     }
 }

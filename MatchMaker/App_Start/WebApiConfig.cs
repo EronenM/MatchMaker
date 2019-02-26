@@ -21,6 +21,12 @@ namespace MatchMaker
             );
 
             config.Routes.MapHttpRoute(
+            name: "DeleteApi",
+            routeTemplate: "api/Form/{action}/{id}",
+            defaults: new { controller = "Form", action = "Delete", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "FormFields",
                 routeTemplate: "api/Form/{action}",
                 defaults: new { controller = "Form"}
