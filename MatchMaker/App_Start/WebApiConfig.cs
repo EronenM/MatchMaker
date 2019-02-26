@@ -13,11 +13,11 @@ namespace MatchMaker
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            // Routes for People API
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "Create",
+                routeTemplate: "api/People/{action}",
+                defaults: new { controller = "People" }
             );
         }
     }
