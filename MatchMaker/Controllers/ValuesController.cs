@@ -10,26 +10,11 @@ namespace MatchMaker.Controllers
 {
     public class ValuesController : ApiController
     {
-
         // GET api/values
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //lisätty
-        // GET: api/Tuote
-
-
-        //GET api/values
-        //public List<People> Get()
-        //{
-            
-        //    var tuotteet = (from t in db.People
-        //                    select t).ToList();
-        //    return tuotteet;
-        //}
-
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
         // GET api/values/5
         public string Get(int id)
@@ -47,7 +32,10 @@ namespace MatchMaker.Controllers
         {
         }
 
-
+        // DELETE api/values/5
+        public void Delete(int id)
+        {
+        }
     }
 }
 
