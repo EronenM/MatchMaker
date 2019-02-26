@@ -15,9 +15,15 @@ namespace MatchMaker
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+            name: "DefaultApi",
+            routeTemplate: "api/Values/{id}",
+            defaults: new { controller = "Values", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "FormFields",
+                routeTemplate: "api/Form/{action}",
+                defaults: new { controller = "Form"}
             );
         }
     }
