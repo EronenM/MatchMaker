@@ -11,11 +11,15 @@ namespace MatchMaker.Controllers
 {
     public class FormController : ApiController
     {
-
+        //instantiate needed variables
         public List<string> interestList = new List<string>();
         public List<string> positionList = new List<string>();
         public List<string> technologyList = new List<string>();
 
+        People pl = new People();
+        MatchMakerEntities db = new MatchMakerEntities();
+
+        //GET action for fieldofinterests
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult FieldOfInterest()
@@ -31,6 +35,7 @@ namespace MatchMaker.Controllers
             return Ok(interestList);
         }
 
+        //GET action for positions
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Position()
@@ -52,6 +57,7 @@ namespace MatchMaker.Controllers
             return Ok(positionList);
         }
 
+        //GET action for technologies
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Technologies()
@@ -70,17 +76,29 @@ namespace MatchMaker.Controllers
             return Ok(technologyList);
         }
 
-        People pl = new People();
-        MatchMakerEntities db = new MatchMakerEntities();
 
         // DELETE api/form/5
         [HttpDelete]
-        public void Delete(int? id)
+        public IHttpActionResult Delete(int? id)
         {
-            People pl = db.People.Find(id);
-            db.People.Remove(pl);
-            db.SaveChanges();
+            if (id == null || id <= 0)
+            {
+                return BadRequest("not a valid id");
+            }
+            else if(db.People.Find(id) == null)
+            {
+                return BadRequest("no account with given id exists");
+            }
+            else
+            {
+                People pl = db.People.Find(id);
+                db.People.Remove(pl);
+                db.SaveChanges();
+            }
+            return Ok("account deleted");
         }
-
     }
 }
+
+
+
