@@ -42,6 +42,12 @@ namespace MatchMaker
             routeTemplate: "api/Form/{action}",
             defaults: new { controller = "Form" }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "Login",
+                routeTemplate: "api/Form/{action}",
+                defaults: new { controller = "Form" }
+            );
         }
     }
 }
