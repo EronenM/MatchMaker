@@ -14,7 +14,7 @@ namespace MatchMaker.Controllers
     public class PeopleController : ApiController
     {
         // [FromBody] Web API uses the Content-Type header to select a formatter
-        // POST api/<controller>/create
+        // POST api/<controller>/createpeople
         [HttpPost]
         public IHttpActionResult CreatePeople([FromBody] int? id, string firstname, string lastname, string course, string description, bool usertype)
         {
@@ -45,7 +45,7 @@ namespace MatchMaker.Controllers
         }
         // Can accept JSON string, so in front-end parse (JSON.stringify) JS object to JSON string and send it.
         // Works fine if we have text to be processed server side
-        // POST api/<controller>/createpeople
+        // POST api/<controller>/create
         [HttpPost]
         public IHttpActionResult Create(People people)
         {
