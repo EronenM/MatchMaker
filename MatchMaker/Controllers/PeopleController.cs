@@ -27,7 +27,7 @@ namespace MatchMaker.Controllers
             people.description = description;
             people.usertype = usertype;
 
-            if (people != null || !people.GetType().GetProperties().Any())
+            if (people != null || people.GetType().GetProperties().Any())
             {
                 dbContext.People.Add(people);
             }
@@ -47,15 +47,11 @@ namespace MatchMaker.Controllers
         // Works fine if we have text to be processed server side
         // POST api/<controller>/createpeople
         [HttpPost]
-        public IHttpActionResult Create(People people/*, HttpRequestMessage request*/)
+        public IHttpActionResult Create(People people)
         {
             MatchMakerEntities dbContext = new MatchMakerEntities();
-            //var requestString = request.Content.ReadAsStringAsync().Result;
-            //var json = requestString;
 
-            //people = JsonConvert.DeserializeObject<People>(json);
-
-            if (people != null || !people.GetType().GetProperties().Any())
+            if (people != null || people.GetType().GetProperties().Any())
             {
                 dbContext.People.Add(people);
             }
@@ -76,18 +72,22 @@ namespace MatchMaker.Controllers
             }
             return Ok();
         }
+        // Basic PUT method
         // PUT: api/<controller>/update/id
         [HttpPut]
         public IHttpActionResult Update(int id, [FromBody] People people)
         {
             MatchMakerEntities dbContext = new MatchMakerEntities();
 
-            if (people != null || !people.GetType().GetProperties().Any())
+            if (people != null || people.GetType().GetProperties().Any())
             {
                 var entityMatch = dbContext.People.FirstOrDefault(p => p.person_id == id);
 
                 entityMatch.firstname = people.firstname;
                 entityMatch.lastname = people.lastname;
+                entityMatch.course = people.course;
+                entityMatch.description = people.description;
+                entityMatch.usertype = people.usertype;
 
                 try
                 {
