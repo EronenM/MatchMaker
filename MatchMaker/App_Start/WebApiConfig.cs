@@ -38,6 +38,12 @@ namespace MatchMaker
             );
 
             config.Routes.MapHttpRoute(
+            name: "UpdatePreferences",
+            routeTemplate: "api/Form/{action}",
+            defaults: new { controller = "Form" , action = "UpdatePreferences"}
+            );
+
+            config.Routes.MapHttpRoute(
             name: "CreatePreferences",
             routeTemplate: "api/Form/{action}",
             defaults: new { controller = "Form", action = "CreatePreferences" }
@@ -48,6 +54,7 @@ namespace MatchMaker
             routeTemplate: "api/Form/{action}",
             defaults: new { controller = "Form" }
             );
+
 
 
         }

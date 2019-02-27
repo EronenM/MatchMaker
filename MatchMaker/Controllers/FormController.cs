@@ -185,8 +185,6 @@ namespace MatchMaker.Controllers
             MatchMakerEntities db = new MatchMakerEntities();
             MatchMakerEntities dbContext = new MatchMakerEntities();
 
-
-
             if (db.People.Find(pref.person_id) != null && dbContext.Preferences.Find(pref.person_id) == null)
             {
                 db.Preferences.Add(pref);
@@ -208,7 +206,37 @@ namespace MatchMaker.Controllers
             return Ok();
         }
 
+        //Update preferences for given ID
+        //api/form/updatepreferences
+        [HttpPut]
+        public IHttpActionResult UpdatePreferences(int? id, Preferences preferences)
+        {
+            MatchMakerEntities db = new MatchMakerEntities();
 
+            var prefs = db.Preferences.Where(x => x.person_id == id).FirstOrDefault();
+
+            if (prefs == null)
+            {
+                return BadRequest("No preferences exists for given ID");
+            }
+            else
+            {
+                prefs.fieldofinterest1 = preferences.fieldofinterest1;
+                prefs.fieldofinterest2 = preferences.fieldofinterest2;
+                prefs.fieldofinterest3 = preferences.fieldofinterest3;
+
+                prefs.position1 = preferences.position1;
+                prefs.position2 = preferences.position2;
+                prefs.position3 = preferences.position3;
+
+                prefs.technology1 = preferences.technology1;
+                prefs.technology2 = preferences.technology2;
+                prefs.technology3 = preferences.technology3;
+            }
+            db.SaveChanges();
+
+            return Ok("Updated");
+        }
     }
 }
 
