@@ -100,6 +100,25 @@ namespace MatchMaker.Controllers
 
             return Ok(peopleList);
         }
+        // GET: Current user email + pwd, returns People object
+        // /api/{controller}/login
+        [HttpGet]
+        [ResponseType(typeof(People))]
+        public IHttpActionResult Login(People people)
+        {
+            MatchMakerEntities dbContext = new MatchMakerEntities();
+            var entityMatch = dbContext.People.First(p => p.email == people.email);
+
+            var clientHash = people.password.GetHashCode();
+            if (clientHash == entityMatch.passwordhash && people.email == entityMatch.email)
+            {
+                return Ok(entityMatch);
+            }
+            else
+            {
+                return BadRequest("Password hash did not match with given information");
+            }
+        }
 
         // poistaa sekä käyttäjän profiilin, että profiilin takana olevan preferenssin, jos sellainen löytyy
         // DELETE api/form/delete/5
