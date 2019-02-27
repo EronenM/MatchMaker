@@ -50,10 +50,15 @@ namespace MatchMaker.Controllers
         public IHttpActionResult Create(People people)
         {
             MatchMakerEntities dbContext = new MatchMakerEntities();
-
+            
             if (people != null || people.GetType().GetProperties().Any())
             {
                 people.regdate = DateTime.Now.Date;
+
+                var pwd = people.password;
+                people.passwordhash = pwd.GetHashCode();
+                people.password = null;
+
                 dbContext.People.Add(people);
             }
 
