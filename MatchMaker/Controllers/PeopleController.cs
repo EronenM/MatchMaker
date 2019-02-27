@@ -53,6 +53,7 @@ namespace MatchMaker.Controllers
 
             if (people != null || people.GetType().GetProperties().Any())
             {
+                people.regdate = DateTime.Now.Date;
                 dbContext.People.Add(people);
             }
 
