@@ -20,14 +20,13 @@ namespace MatchMaker.Controllers
         {
             List<string> interestList = new List<string>();
 
-            interestList.Add("Computers and Technology");
-            interestList.Add("Health Care and Allied Health");
+            interestList.Add("Health Care");
             interestList.Add("Education and Social Services");
             interestList.Add("Arts and Communications");
             interestList.Add("Trades and Transportation");
             interestList.Add("Management, Business, and Finance");
             interestList.Add("Architecture and Civil Engineering");
-            interestList.Add("Science");
+            interestList.Add("Industry");
 
             return Ok(interestList);
         }
@@ -40,20 +39,19 @@ namespace MatchMaker.Controllers
         {
             List<string> positionList = new List<string>();
 
-            positionList.Add("Cloud Architect");
-            positionList.Add("Cloud Services Developer");
-            positionList.Add("Cloud Software and Network Engineer");
-            positionList.Add("Computer and Information Research Scientist");
-            positionList.Add("IT Analyst");
-            positionList.Add("Network Architect");
-            positionList.Add("Database Administrator");
-            positionList.Add("Application Support Analyst");
-            positionList.Add("Application Developer");
-            positionList.Add("Java Developer");
+            positionList.Add("Backend Developer");
+            positionList.Add("Frontend Developer");
+            positionList.Add("Data analyst");
             positionList.Add("Software Architect");
-            positionList.Add("Front End Developer");
-            positionList.Add("Web Developer");
-
+            positionList.Add("Database Administrator");
+            positionList.Add("DevOps Engineer");
+            positionList.Add("Cloud Services Developer");
+            positionList.Add("Network Architect");
+            positionList.Add("Application Support");
+            positionList.Add("Application Sales");
+            positionList.Add("UI Designer");
+            positionList.Add("UX Designer");
+            
             return Ok(positionList);
         }
 
@@ -65,17 +63,19 @@ namespace MatchMaker.Controllers
         {
             List<string> technologyList = new List<string>();
 
+            technologyList.Add("C#");
+            technologyList.Add("JavaScript");
             technologyList.Add("Java");
             technologyList.Add("Visual Basic");
-            technologyList.Add("JavaScript");
-            technologyList.Add("Unix Shell Scripting");
+            technologyList.Add("React");
             technologyList.Add("HTML, XHTML");
-            technologyList.Add("MySQL");
-            technologyList.Add("Ruby on Rails");
+            technologyList.Add("MariaDB");
+            technologyList.Add("Ruby");
             technologyList.Add("Python");
-            technologyList.Add("C#");
             technologyList.Add("PHP");
-
+            technologyList.Add("Angular");
+            technologyList.Add("Vue.js");
+            
             return Ok(technologyList);
         }
 
