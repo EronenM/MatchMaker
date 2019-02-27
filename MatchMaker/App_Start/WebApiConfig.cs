@@ -22,10 +22,16 @@ namespace MatchMaker
 
             config.Routes.MapHttpRoute(
             name: "DeleteApi",
-            routeTemplate: "api/Form/Delete/{id}",
-            defaults: new { controller = "Form", action = "Delete", id = RouteParameter.Optional }
+            routeTemplate: "api/Form/DeleteFull/{id}",
+            defaults: new { controller = "Form", action = "DeleteFull", id = RouteParameter.Optional }
             );
-            
+
+            config.Routes.MapHttpRoute(
+            name: "DeleteOnlyPreferencesApi",
+            routeTemplate: "api/Form/DeletePreferences/{id}",
+            defaults: new { controller = "Form", action = "DeletePreferences", id = RouteParameter.Optional }
+            );
+
             config.Routes.MapHttpRoute(
             name: "FormFields",
             routeTemplate: "api/Form/{action}",

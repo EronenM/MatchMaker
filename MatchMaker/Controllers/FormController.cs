@@ -18,6 +18,8 @@ namespace MatchMaker.Controllers
         public List<People> peopleList = new List<People>();
 
         People pl = new People();
+        Preferences pr = new Preferences();
+
         MatchMakerEntities db = new MatchMakerEntities();
 
         //GET action for fieldofinterests
@@ -97,27 +99,64 @@ namespace MatchMaker.Controllers
             }
 
             return Ok(peopleList);
-        } 
+        }
 
+        // poistaa sekä käyttäjän profiilin, että profiilin takana olevan preferenssin, jos sellainen löytyy
         // DELETE api/form/delete/5
         [HttpDelete]
-        public IHttpActionResult Delete(int? id)
+        public IHttpActionResult DeleteFull(int? id)
         {
             if (id == null || id <= 0)
             {
                 return BadRequest("not a valid id");
             }
-            else if(db.People.Find(id) == null)
+            else if (db.People.Find(id) == null)
             {
                 return BadRequest("no account with given id exists");
             }
             else
             {
-                People pl = db.People.Find(id);
+                pl = db.People.Find(id);
                 db.People.Remove(pl);
+                pr = db.Preferences.Where(x => x.person_id == id).FirstOrDefault();
+
+                if (pr != null)
+                {
+                    db.Preferences.Remove(pr);
+                }
                 db.SaveChanges();
             }
             return Ok("account deleted");
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeletePreferences(int? id)
+        {
+            if (id == null || id <= 0)
+            {
+                return BadRequest("not a valid id");
+            }
+            else if (db.People.Find(id) == null)
+            {
+                return BadRequest("no account with given id exists");
+            }
+            else
+            {
+                pl = db.People.Find(id);
+                pr = db.Preferences.Where(x => x.person_id == id).FirstOrDefault();
+
+                if (pr == null)
+                {
+                    return BadRequest("no preferences for given account");
+                }
+                else
+                {
+                    db.Preferences.Remove(pr);
+                }
+                db.SaveChanges();
+
+            }
+            return Ok("preferences deleted");
         }
     }
 }
