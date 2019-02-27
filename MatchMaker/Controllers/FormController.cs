@@ -1,6 +1,7 @@
 ﻿using MatchMaker.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,23 +12,14 @@ namespace MatchMaker.Controllers
 {
     public class FormController : ApiController
     {
-        //instantiate needed variables
-        public List<string> interestList = new List<string>();
-        public List<string> positionList = new List<string>();
-        public List<string> technologyList = new List<string>();
-        public List<People> peopleList = new List<People>();
-
-        People pl = new People();
-        Preferences pr = new Preferences();
-
-        MatchMakerEntities db = new MatchMakerEntities();
-
         //GET action for fieldofinterests
         // api/form/fieldofinterest
         [HttpGet]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult FieldOfInterest()
         {
+            List<string> interestList = new List<string>();
+
             interestList.Add("Computers and Technology");
             interestList.Add("Health Care and Allied Health");
             interestList.Add("Education and Social Services");
@@ -46,6 +38,8 @@ namespace MatchMaker.Controllers
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Position()
         {
+            List<string> positionList = new List<string>();
+
             positionList.Add("Cloud Architect");
             positionList.Add("Cloud Services Developer");
             positionList.Add("Cloud Software and Network Engineer");
@@ -69,6 +63,8 @@ namespace MatchMaker.Controllers
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Technologies()
         {
+            List<string> technologyList = new List<string>();
+
             technologyList.Add("Java");
             technologyList.Add("Visual Basic");
             technologyList.Add("JavaScript");
@@ -89,6 +85,13 @@ namespace MatchMaker.Controllers
         [ResponseType(typeof(IEnumerator<People>))]
         public IHttpActionResult GetAll()
         {
+            MatchMakerEntities db = new MatchMakerEntities();
+
+            List<People> peopleList = new List<People>();
+
+            People pl = new People();
+            Preferences pr = new Preferences();
+
             var people = from p in db.People
                          orderby p.person_id
                          select p;
@@ -106,6 +109,12 @@ namespace MatchMaker.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteFull(int? id)
         {
+
+            MatchMakerEntities db = new MatchMakerEntities();
+
+            People pl = new People();
+            Preferences pr = new Preferences();
+
             if (id == null || id <= 0)
             {
                 return BadRequest("not a valid id");
@@ -129,9 +138,17 @@ namespace MatchMaker.Controllers
             return Ok("account deleted");
         }
 
+        // DELETE poistaa vain käyttäjän preferenssit, jos sellaiset löytyy
+        // api/form/DeletePreferences
         [HttpDelete]
         public IHttpActionResult DeletePreferences(int? id)
         {
+
+            MatchMakerEntities db = new MatchMakerEntities();
+
+            People pl = new People();
+            Preferences pr = new Preferences();
+
             if (id == null || id <= 0)
             {
                 return BadRequest("not a valid id");
@@ -158,6 +175,40 @@ namespace MatchMaker.Controllers
             }
             return Ok("preferences deleted");
         }
+
+        //adds preferences for person
+        //api/form/CreatePreferences
+        [HttpPost]
+        public IHttpActionResult CreatePreferences(Preferences pref)
+        {
+
+            MatchMakerEntities db = new MatchMakerEntities();
+            MatchMakerEntities dbContext = new MatchMakerEntities();
+
+
+
+            if (db.People.Find(pref.person_id) != null && dbContext.Preferences.Find(pref.person_id) == null)
+            {
+                db.Preferences.Add(pref);
+            }
+            else
+            {
+                return BadRequest("Preferences with given person_id already exists");
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                ex.Entries.Single().Reload();
+                db.SaveChanges();
+            }
+            return Ok();
+        }
+
+
     }
 }
 
