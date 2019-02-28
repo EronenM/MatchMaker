@@ -20,7 +20,7 @@ namespace MatchMaker.Controllers
         {
             List<string> interestList = new List<string>();
 
-            interestList.Add("Select your interest!");
+            interestList.Add("Select field");
             interestList.Add("Health Care");
             interestList.Add("Education and Social Services");
             interestList.Add("Arts and Communications");
@@ -40,7 +40,7 @@ namespace MatchMaker.Controllers
         {
             List<string> positionList = new List<string>();
 
-            positionList.Add("Select your position!");
+            positionList.Add("Select position");
             positionList.Add("Backend Developer");
             positionList.Add("Frontend Developer");
             positionList.Add("Data analyst");
@@ -65,7 +65,7 @@ namespace MatchMaker.Controllers
         {
             List<string> technologyList = new List<string>();
 
-            technologyList.Add("Select your technology!");
+            technologyList.Add("Select technology");
             technologyList.Add("C#");
             technologyList.Add("JavaScript");
             technologyList.Add("Java");
@@ -107,7 +107,7 @@ namespace MatchMaker.Controllers
             return Ok(peopleList);
         }
 
-        //Posts persons preferences based on url Id
+        //Gets persons preferences based on url Id
         //api/form/GetPreferences
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Preferences>))]
@@ -119,8 +119,7 @@ namespace MatchMaker.Controllers
 
             var prefs = from p in db.Preferences
                         where p.person_id == id
-                        select p;
-                        //select new { p.fieldofinterest1, p.fieldofinterest2, p.fieldofinterest3, p.position1, p.position2, p.position3, p.technology1, p.technology2, p.technology3};
+                        select new { p.fieldofinterest1, p.fieldofinterest2, p.fieldofinterest3, p.position1, p.position2, p.position3, p.technology1, p.technology2, p.technology3};
 
             return Ok(prefs);
         }
