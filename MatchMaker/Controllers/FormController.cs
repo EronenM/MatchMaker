@@ -107,7 +107,7 @@ namespace MatchMaker.Controllers
         // poistaa sekä käyttäjän profiilin, että profiilin takana olevan preferenssin, jos sellainen löytyy
         // DELETE api/form/delete/5
         [HttpDelete]
-        public IHttpActionResult DeleteFull(int? id)
+        public IHttpActionResult DeleteFull(int id)
         {
 
             MatchMakerEntities db = new MatchMakerEntities();
@@ -115,7 +115,7 @@ namespace MatchMaker.Controllers
             People pl = new People();
             Preferences pr = new Preferences();
 
-            if (id == null || id <= 0)
+            if (id <= 0)
             {
                 return BadRequest("not a valid id");
             }
@@ -141,7 +141,7 @@ namespace MatchMaker.Controllers
         // DELETE poistaa vain käyttäjän preferenssit, jos sellaiset löytyy
         // api/form/DeletePreferences
         [HttpDelete]
-        public IHttpActionResult DeletePreferences(int? id)
+        public IHttpActionResult DeletePreferences(int id)
         {
 
             MatchMakerEntities db = new MatchMakerEntities();
@@ -149,7 +149,7 @@ namespace MatchMaker.Controllers
             People pl = new People();
             Preferences pr = new Preferences();
 
-            if (id == null || id <= 0)
+            if (id <= 0)
             {
                 return BadRequest("not a valid id");
             }
@@ -209,7 +209,7 @@ namespace MatchMaker.Controllers
         //Update preferences for given ID
         //api/form/updatepreferences
         [HttpPut]
-        public IHttpActionResult UpdatePreferences(int? id, Preferences preferences)
+        public IHttpActionResult UpdatePreferences(int id, Preferences preferences)
         {
             MatchMakerEntities db = new MatchMakerEntities();
 
