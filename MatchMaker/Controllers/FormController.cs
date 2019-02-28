@@ -103,9 +103,9 @@ namespace MatchMaker.Controllers
 
             return Ok(peopleList);
         }
-        // GET: Current user email + pwd, returns People object
+        // POST: Current user email + pwd, returns People object
         // /api/{controller}/login
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(People))]
         public IHttpActionResult Login(People people)
         {
