@@ -20,6 +20,7 @@ namespace MatchMaker.Controllers
         {
             List<string> interestList = new List<string>();
 
+            interestList.Add("Select field");
             interestList.Add("Health Care");
             interestList.Add("Education and Social Services");
             interestList.Add("Arts and Communications");
@@ -39,6 +40,7 @@ namespace MatchMaker.Controllers
         {
             List<string> positionList = new List<string>();
 
+            positionList.Add("Select position");
             positionList.Add("Backend Developer");
             positionList.Add("Frontend Developer");
             positionList.Add("Data analyst");
@@ -63,6 +65,7 @@ namespace MatchMaker.Controllers
         {
             List<string> technologyList = new List<string>();
 
+            technologyList.Add("Select technology");
             technologyList.Add("C#");
             technologyList.Add("JavaScript");
             technologyList.Add("Java");
