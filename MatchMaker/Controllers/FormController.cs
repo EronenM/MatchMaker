@@ -121,7 +121,7 @@ namespace MatchMaker.Controllers
             return Ok(prefs);
         }
 
-        // GET: Current user email + pwd, returns People object
+        // POST: Current user email + pwd, returns People object
         // /api/{controller}/login
         [HttpPost]
         [ResponseType(typeof(People))]
