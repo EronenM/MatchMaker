@@ -51,7 +51,7 @@ namespace MatchMaker.Controllers
             positionList.Add("Application Sales");
             positionList.Add("UI Designer");
             positionList.Add("UX Designer");
-            
+
             return Ok(positionList);
         }
 
@@ -75,7 +75,7 @@ namespace MatchMaker.Controllers
             technologyList.Add("PHP");
             technologyList.Add("Angular");
             technologyList.Add("Vue.js");
-            
+
             return Ok(technologyList);
         }
 
@@ -103,6 +103,24 @@ namespace MatchMaker.Controllers
 
             return Ok(peopleList);
         }
+
+        //Gets persons preferences based on url Id
+        //api/form/GetPreferences
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Preferences>))]
+        public IHttpActionResult GetPreference(int id)
+        {
+            MatchMakerEntities db = new MatchMakerEntities();
+
+            Preferences pref = new Preferences();
+
+            var prefs = from p in db.Preferences
+                        where p.person_id == id
+                        select new { p.fieldofinterest1, p.fieldofinterest2, p.fieldofinterest3, p.position1, p.position2, p.position3, p.technology1, p.technology2, p.technology3};
+
+            return Ok(prefs);
+        }
+
         // GET: Current user email + pwd, returns People object
         // /api/{controller}/login
         [HttpGet]
