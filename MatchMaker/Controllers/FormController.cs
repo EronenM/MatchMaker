@@ -106,7 +106,7 @@ namespace MatchMaker.Controllers
 
         //Gets persons preferences based on url Id
         //api/form/GetPreferences
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(IEnumerable<Preferences>))]
         public IHttpActionResult GetPreference(int id)
         {
