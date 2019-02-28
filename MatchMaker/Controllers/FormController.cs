@@ -155,6 +155,8 @@ namespace MatchMaker.Controllers
             People pl = new People();
             Preferences pr = new Preferences();
 
+            List<Preferences> prefList = new List<Preferences>();
+
             if (id <= 0)
             {
                 return BadRequest("not a valid id");
@@ -165,14 +167,23 @@ namespace MatchMaker.Controllers
             }
             else
             {
+                //pr = db.Preferences.Where(x => x.person_id == id).FirstOrDefault();
+
+                var lista = from p in db.Preferences
+                            where p.person_id == id
+                            select p;
+
+                foreach (var preferences in lista)
+                {
+                    db.Preferences.Remove(preferences);
+                }
+
                 pl = db.People.Find(id);
                 db.People.Remove(pl);
-                pr = db.Preferences.Where(x => x.person_id == id).FirstOrDefault();
-
-                if (pr != null)
-                {
-                    db.Preferences.Remove(pr);
-                }
+                //if (pr != null)
+                //{
+                //    db.Preferences.Remove(pr);
+                //}
                 db.SaveChanges();
             }
             return Ok("account deleted");
