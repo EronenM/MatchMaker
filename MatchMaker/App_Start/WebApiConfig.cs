@@ -60,6 +60,12 @@ namespace MatchMaker
                 routeTemplate: "api/Form/{action}",
                 defaults: new { controller = "Form" }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "GetPreferencesByID",
+                routeTemplate: "api/Form/{action}",
+                defaults: new { controller = "Form" }
+            );
         }
     }
 }
